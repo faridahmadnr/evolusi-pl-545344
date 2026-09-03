@@ -1,59 +1,63 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# evolusi-pl-545344
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Tugas 1 Praktikum Evolusi Perangkat Lunak - Manajemen GitHub & Prinsip CI  
+**NIM:** 545344  
+**Nama Mahasiswa:** Jovan (faridahmadnr)  
+**Organisasi:** [KEPL2026](https://github.com/KEPL2026)  
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📌 Deskripsi Proyek
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Repository ini berisi implementasi aplikasi web sederhana berbasis **Laravel 11** dengan menerapkan standar rekayasa perangkat lunak modern:
+- **Git Flow Branching Strategy**: Pemisahan branch `main` (production), `dev` (development), dan `feature/*` (fitur spesifik).
+- **Conventional Commits**: Standar penulisan pesan commit terstruktur (`feat:`, `fix:`, `chore:`, `ci:`, `docs:`, `test:`).
+- **Continuous Integration (CI)**: Otomatisasi pengujian dan linting menggunakan **GitHub Actions** dengan 2 jobs (`code-linting` dan `test-suite`).
+- **Branch Protection Rules**: Proteksi branch `main` dan `dev` untuk memastikan setiap perubahan melalui Pull Request dan lolos status check CI.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Alur Percabangan (Branching Model)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+1. `main`: Branch utama (terlindungi, hanya menerima perubahan via Pull Request dari `dev`).
+2. `dev`: Branch integrasi pengembangan (menerima perubahan dari `feature/*`).
+3. `feature/<nama-fitur>`: Branch kerja untuk implementasi fitur nyata sebelum digabungkan ke `dev`.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## ⚙️ GitHub Actions CI
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Workflow CI didefinisikan pada `.github/workflows/ci.yml` dan terdiri dari dua job:
+1. **`code-linting`**: Memeriksa kerapian dan standar penulisan kode PHP menggunakan Laravel Pint.
+2. **`test-suite`**: Menjalankan pengujian otomatis (Unit & Feature Tests) menggunakan PHPUnit dengan database in-memory SQLite.
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🛠️ Menjalankan Aplikasi Secara Lokal
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Clone repository:
+   ```bash
+   git clone https://github.com/faridahmadnr/evolusi-pl-545344.git
+   cd evolusi-pl-545344
+   ```
+2. Install dependensi:
+   ```bash
+   composer install
+   ```
+3. Salin environment dan generate key:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+4. Jalankan migrasi database:
+   ```bash
+   php artisan migrate
+   ```
+5. Jalankan server lokal:
+   ```bash
+   php artisan serve
+   ```
+6. Menjalankan automated tests:
+   ```bash
+   php artisan test
+   ```
