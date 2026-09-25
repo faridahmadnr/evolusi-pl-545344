@@ -2,12 +2,12 @@
 
 Tugas 1 Praktikum Evolusi Perangkat Lunak - Manajemen GitHub & Prinsip CI  
 **NIM:** 545344  
-**Nama Mahasiswa:** Jovan (faridahmadnr)  
+**Nama Mahasiswa:Farid Ahmad Nur Rahman
 **Organisasi:** [KEPL2026](https://github.com/KEPL2026)  
 
 ---
 
-## 📌 Deskripsi Proyek
+##  Deskripsi Proyek
 
 Repository ini berisi implementasi aplikasi web sederhana berbasis **Laravel 11** dengan menerapkan standar rekayasa perangkat lunak modern:
 - **Git Flow Branching Strategy**: Pemisahan branch `main` (production), `dev` (development), dan `feature/*` (fitur spesifik).
@@ -17,7 +17,7 @@ Repository ini berisi implementasi aplikasi web sederhana berbasis **Laravel 11*
 
 ---
 
-## 🚀 Alur Percabangan (Branching Model)
+##  Alur Percabangan (Branching Model)
 
 1. `main`: Branch utama (terlindungi, hanya menerima perubahan via Pull Request dari `dev`).
 2. `dev`: Branch integrasi pengembangan (menerima perubahan dari `feature/*`).
@@ -25,7 +25,7 @@ Repository ini berisi implementasi aplikasi web sederhana berbasis **Laravel 11*
 
 ---
 
-## ⚙️ GitHub Actions CI
+##  GitHub Actions CI
 
 Workflow CI didefinisikan pada `.github/workflows/ci.yml` dan terdiri dari dua job:
 1. **`code-linting`**: Memeriksa kerapian dan standar penulisan kode PHP menggunakan Laravel Pint.
@@ -33,7 +33,7 @@ Workflow CI didefinisikan pada `.github/workflows/ci.yml` dan terdiri dari dua j
 
 ---
 
-## 🛠️ Menjalankan Aplikasi Secara Lokal
+##  Menjalankan Aplikasi Secara Lokal
 
 1. Clone repository:
    ```bash
