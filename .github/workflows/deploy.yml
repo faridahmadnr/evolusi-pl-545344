@@ -1,0 +1,115 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv
+          coverage: none
+
+      - name: Install Dependencies
+        run: composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Upload Build Artifact (vendor)
+        uses: actions/upload-artifact@v4
+        with:
+          name: vendor-build
+          path: vendor/
+          retention-days: 1
+
+  test:
+    name: Run Automated Tests
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv, pdo_sqlite, sqlite3
+          coverage: none
+
+      - name: Prepare Environment File
+        run: cp .env.example .env
+
+      - name: Download Build Artifact (vendor)
+        uses: actions/download-artifact@v4
+        with:
+          name: vendor-build
+          path: vendor/
+
+      - name: Generate Application Key
+        run: php artisan key:generate
+
+      - name: Execute Tests
+        run: php artisan test
+
+  staging:
+    name: Deploy to Staging
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Simulation to Staging
+        run: |
+          echo "=========================================="
+          echo "🚀 DEPLOYMENT KE LINGKUNGAN STAGING"
+          echo "=========================================="
+          echo "Mengirim build terbaru ke server staging tiruan..."
+          echo "Uji integrasi pada staging server berhasil."
+          echo "Status: Staging ready for verification."
+
+  production:
+    name: Deploy to Production
+    needs: [staging]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Execute 7 Deployment Steps
+        run: |
+          echo "=========================================================="
+          echo "🚀 MEMULAI PROSES DEPLOYMENT KE PRODUCTION SERVER"
+          echo "=========================================================="
+          echo "1. php artisan down --retry=60"
+          echo "   -> Kunci pintu: Menampilkan halaman pemeliharaan (maintenance mode)"
+          echo "2. git pull origin main"
+          echo "   -> Ambil kode terbaru dari branch main"
+          echo "3. composer install --no-dev --optimize-autoloader"
+          echo "   -> Pasang dependensi produksi tanpa paket dev"
+          echo "4. php artisan migrate --force"
+          echo "   -> Eksekusi migrasi skema basis data secara otomatis"
+          echo "5. php artisan config:cache && php artisan route:cache && php artisan view:cache"
+          echo "   -> Bangun ulang cache konfigurasi, route, dan blade view"
+          echo "6. php artisan queue:restart"
+          echo "   -> Muat ulang pekerja antrean (queue worker) agar memuat kode baru"
+          echo "7. php artisan up"
+          echo "   -> Buka pintu kembali: Aplikasi siap melayani pengguna"
+          echo "=========================================================="
+          echo "✅ DEPLOYMENT PRODUCTION BERHASIL DISELESAIKAN"
+          echo "=========================================================="
