@@ -134,13 +134,23 @@ jobs:
           echo "=========================================================="
           echo "🚀 DEPLOYMENT KE VERCEL (GLOBAL EDGE NETWORK)"
           echo "=========================================================="
-          echo "Menyalin vercel.json untuk routing SPA (halaman bisa di-refresh)..."
-          cp frontend/vercel.json frontend/dist/vercel.json
+          echo "Menyiapkan output prebuilt untuk Vercel tanpa build ulang..."
+          mkdir -p frontend/.vercel/output/static
+          cp -r frontend/dist/* frontend/.vercel/output/static/
+          cat << 'EOF' > frontend/.vercel/output/config.json
+          {
+            "version": 3,
+            "routes": [
+              { "handle": "filesystem" },
+              { "src": "/(.*)", "dest": "/index.html" }
+            ]
+          }
+          EOF
           mkdir -p frontend/.vercel
           echo "{\"projectId\":\"${{ secrets.VERCEL_PROJECT_ID }}\",\"orgId\":\"${{ secrets.VERCEL_ORG_ID }}\"}" > frontend/.vercel/project.json
-          echo "Menyebarkan dist/ ke Vercel tanpa build ulang..."
+          echo "Menyebarkan file prebuilt ke Vercel tanpa build ulang..."
           cd frontend
-          npx --yes vercel deploy dist --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
+          npx --yes vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
           echo "=========================================================="
           echo "✅ DEPLOYMENT VERCEL BERHASIL"
           echo "=========================================================="
