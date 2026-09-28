@@ -4,8 +4,7 @@ import { formatStatus, countPendingTasks, filterCompletedTasks } from '../taskHe
 describe('Task Helper Logic Tests', () => {
   describe('formatStatus', () => {
     it('mengembalikan status "✅ Selesai" jika isCompleted bernilai true', () => {
-      // SENGAJA DIGAGALKAN UNTUK PEMBUKTIAN QUALITY GATE CI/CD:
-      expect(formatStatus(true)).toBe('❌ STATUS_SENGAJA_DISALAHKAN_UNTUK_PENGUJIAN_CI')
+      expect(formatStatus(true)).toBe('✅ Selesai')
     })
 
     it('mengembalikan status "⏳ Belum Selesai" jika isCompleted bernilai false', () => {
