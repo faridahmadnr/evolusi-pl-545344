@@ -20,6 +20,18 @@ class TaskController extends Controller
     }
 
     /**
+     * Provide JSON endpoint for frontend consumer (Vue 3).
+     */
+    public function apiIndex(): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data tugas berhasil diambil',
+            'data' => Task::query()->latest()->get()
+        ]);
+    }
+
+    /**
      * Store a newly created task in storage.
      */
     public function store(Request $request): RedirectResponse
