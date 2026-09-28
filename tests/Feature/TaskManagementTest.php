@@ -81,4 +81,27 @@ class TaskManagementTest extends TestCase
             'id' => $task->id,
         ]);
     }
+
+    public function test_api_returns_tasks_in_json_format(): void
+    {
+        Task::create([
+            'title' => 'Tugas API Vue',
+            'description' => 'Menghubungkan frontend Vue dengan backend Laravel',
+            'is_completed' => false,
+        ]);
+
+        $response = $this->getJson('/api/tasks');
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'status',
+                'message',
+                'data' => [
+                    '*' => ['id', 'title', 'description', 'is_completed', 'created_at', 'updated_at'],
+                ],
+            ])
+            ->assertJsonFragment([
+                'title' => 'Tugas API Vue',
+            ]);
+    }
 }
